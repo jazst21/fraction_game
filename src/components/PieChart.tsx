@@ -19,16 +19,13 @@ export const PieChart: React.FC<PieChartProps> = ({ fractions }) => {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    // Clear canvas
     ctx.clearRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
 
-    // Draw white background circle
     ctx.beginPath();
     ctx.arc(CIRCLE_CENTER, CIRCLE_CENTER, CIRCLE_RADIUS + 2, 0, 2 * Math.PI);
     ctx.fillStyle = 'white';
     ctx.fill();
 
-    // Draw main circle outline
     ctx.beginPath();
     ctx.arc(CIRCLE_CENTER, CIRCLE_CENTER, CIRCLE_RADIUS, 0, 2 * Math.PI);
     ctx.strokeStyle = 'black';
@@ -36,22 +33,20 @@ export const PieChart: React.FC<PieChartProps> = ({ fractions }) => {
 
     if (fractions.length > 0) {
       let startAngle = 0;
+      let runningSum = 0;
 
-      fractions.forEach(fraction => {
+      fractions.forEach((fraction, index) => {
+        runningSum += fraction;
         const extentAngle = fraction * 2 * Math.PI;
-
-        // Draw white outline - increased size from +1 to +3
-        ctx.beginPath();
-        ctx.arc(CIRCLE_CENTER, CIRCLE_CENTER, CIRCLE_RADIUS + 3, startAngle, startAngle + extentAngle);
-        ctx.lineTo(CIRCLE_CENTER, CIRCLE_CENTER);
-        ctx.fillStyle = 'white';
-        ctx.fill();
-
-        // Draw blue slice with white outline - added lineWidth
+        
         ctx.beginPath();
         ctx.arc(CIRCLE_CENTER, CIRCLE_CENTER, CIRCLE_RADIUS, startAngle, startAngle + extentAngle);
         ctx.lineTo(CIRCLE_CENTER, CIRCLE_CENTER);
-        ctx.fillStyle = 'blue';
+        
+        // Only use red for the last piece if it makes the sum exceed 1
+        const isLastPiece = index === fractions.length - 1;
+        ctx.fillStyle = (isLastPiece && runningSum > 1) ? '#ffcccc' : 'blue';
+        
         ctx.fill();
         ctx.strokeStyle = 'white';
         ctx.lineWidth = 4;

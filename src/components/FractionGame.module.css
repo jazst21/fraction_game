@@ -47,6 +47,11 @@
 .score {
   font-size: 1.2rem;
   font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.exceeding {
+  color: #ff0000;
 }
 
 .resetButton {

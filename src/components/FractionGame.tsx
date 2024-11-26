@@ -14,33 +14,40 @@ const FRACTIONS = {
 export const FractionGame: React.FC = () => {
   const [currentSum, setCurrentSum] = useState(0);
   const [addedFractions, setAddedFractions] = useState<number[]>([]);
+  const [isExceeding, setIsExceeding] = useState(false);
+
+  const handleReset = () => {
+    setCurrentSum(0);
+    setAddedFractions([]);
+    setIsExceeding(false);
+  };
 
   const handleDrop = (fraction: string) => {
     const fractionValue = FRACTIONS[fraction as keyof typeof FRACTIONS];
     const newSum = currentSum + fractionValue;
 
-    if (newSum <= 1) {
-      setCurrentSum(newSum);
-      setAddedFractions([...addedFractions, fractionValue]);
+    setCurrentSum(newSum);
+    setAddedFractions([...addedFractions, fractionValue]);
+    
+    const exceeding = newSum > 1;
+    setIsExceeding(exceeding);
 
+    setTimeout(() => {
       if (Math.abs(newSum - 1) < 1e-9) {
-        alert("Congratulations! You've reached 1! You won the game!");
+        alert("Yes ! Congratulations! You've reached 1! You won the game!");
+        handleReset();
+      } else if (exceeding) {
+        alert("Aww No ! The sum has exceeded 1! Try again!");
+        handleReset();
       }
-    } else {
-      alert("Adding this fraction would exceed 1!");
-    }
-  };
-
-  const handleReset = () => {
-    setCurrentSum(0);
-    setAddedFractions([]);
+    }, 1000);
   };
 
   return (
     <div className={styles.gameContainer}>
       <div className={styles.leftPanel}>
         <PieChart fractions={addedFractions} />
-        <div className={styles.score}>
+        <div className={`${styles.score} ${isExceeding ? styles.exceeding : ''}`}>
           Current Sum: {currentSum.toFixed(3)}
         </div>
       </div>
