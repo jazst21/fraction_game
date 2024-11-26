@@ -7,6 +7,13 @@
   text-align: center;
   user-select: none;
   transition: background-color 0.2s;
+  min-width: 60px;
+}
+
+@media (max-width: 767px) {
+  .fractionButton {
+    flex: 0 1 calc(33.33% - 10px);
+  }
 }
 
 .fractionButton:hover {
