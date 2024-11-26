@@ -1,0 +1,18 @@
+.fractionButton {
+  padding: 10px;
+  background-color: white;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  cursor: grab;
+  text-align: center;
+  user-select: none;
+  transition: background-color 0.2s;
+}
+
+.fractionButton:hover {
+  background-color: #f0f0f0;
+}
+
+.fractionButton:active {
+  cursor: grabbing;
+} 
