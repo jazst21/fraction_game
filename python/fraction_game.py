@@ -64,7 +64,7 @@ class PieChart:
                     extent=extent_angle,
                     fill='white',
                     outline='white',
-                    width=3
+                    width=5
                 )
                 
                 # Draw filled blue arc with white outline
@@ -77,7 +77,7 @@ class PieChart:
                     extent=extent_angle,
                     fill='blue',
                     outline='white',
-                    width=1
+                    width=2
                 )
                 
                 start_angle += extent_angle

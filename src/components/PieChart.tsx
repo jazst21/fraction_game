@@ -40,20 +40,21 @@ export const PieChart: React.FC<PieChartProps> = ({ fractions }) => {
       fractions.forEach(fraction => {
         const extentAngle = fraction * 2 * Math.PI;
 
-        // Draw white outline
+        // Draw white outline - increased size from +1 to +3
         ctx.beginPath();
-        ctx.arc(CIRCLE_CENTER, CIRCLE_CENTER, CIRCLE_RADIUS + 1, startAngle, startAngle + extentAngle);
+        ctx.arc(CIRCLE_CENTER, CIRCLE_CENTER, CIRCLE_RADIUS + 3, startAngle, startAngle + extentAngle);
         ctx.lineTo(CIRCLE_CENTER, CIRCLE_CENTER);
         ctx.fillStyle = 'white';
         ctx.fill();
 
-        // Draw blue slice with white outline
+        // Draw blue slice with white outline - added lineWidth
         ctx.beginPath();
         ctx.arc(CIRCLE_CENTER, CIRCLE_CENTER, CIRCLE_RADIUS, startAngle, startAngle + extentAngle);
         ctx.lineTo(CIRCLE_CENTER, CIRCLE_CENTER);
         ctx.fillStyle = 'blue';
         ctx.fill();
         ctx.strokeStyle = 'white';
+        ctx.lineWidth = 4;
         ctx.stroke();
 
         startAngle += extentAngle;
